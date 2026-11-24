@@ -1,0 +1,16 @@
+PySide6
+numpy
+av
+sounddevice
+psutil
+pygame
+cryptography
+protobuf
+pyyaml
+requests
+aiohttp
+async_timeout
+construct
+beautifulsoup4
+wheel
+pyee<9
