@@ -40,7 +40,7 @@ def main() -> int:
     from PySide6 import QtCore, QtGui, QtWidgets
     QtCore.QLoggingCategory.setFilterRules("qt.qpa.*=false")
     QtGui.QSurfaceFormat.setDefaultFormat(_gl_format(QtGui))
-    try:  # own taskbar identity so the Mingo icon shows instead of the Python one
+    try:  
         import ctypes
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("Mingo.PS5RemotePlay")
     except Exception:
