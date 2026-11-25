@@ -7,10 +7,10 @@ import threading
 import traceback
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "shim"))  # netifaces replacement (see shim/netifaces.py)
+sys.path.insert(0, os.path.join(HERE, "shim")) 
 sys.path.insert(0, HERE)
 
-from ps5rp import settings as cfg  # noqa: E402
+from ps5rp import settings as cfg 
 
 cfg.setup_logging()
 log = logging.getLogger("main")
