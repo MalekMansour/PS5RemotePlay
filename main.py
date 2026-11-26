@@ -12,11 +12,6 @@ sys.path.insert(0, HERE)
 
 from ps5rp import settings as cfg 
 
-cfg.setup_logging()
-log = logging.getLogger("main")
-_crash = open(cfg.CRASH_FILE, "a", encoding="utf-8")
-faulthandler.enable(_crash)  
-
 
 def _hook(exc_type, exc, tb):
     log.error("Unhandled exception", exc_info=(exc_type, exc, tb))
