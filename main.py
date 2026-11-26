@@ -12,6 +12,10 @@ sys.path.insert(0, HERE)
 
 from ps5rp import settings as cfg 
 
+cfg.setup_logging()
+log = logging.getLogger("main")
+_crash = open(cfg.CRASH_FILE, "a", encoding="utf-8")
+faulthandler.enable(_crash)  
 
 def _hook(exc_type, exc, tb):
     log.error("Unhandled exception", exc_info=(exc_type, exc, tb))
@@ -29,35 +33,6 @@ def _boost_priority() -> None:
     except Exception:
         log.info("could not raise priority", exc_info=True)
 
-
-def main() -> int:
-    _boost_priority()
-    from PySide6 import QtCore, QtGui, QtWidgets
-    QtCore.QLoggingCategory.setFilterRules("qt.qpa.*=false")
-    QtGui.QSurfaceFormat.setDefaultFormat(_gl_format(QtGui))
-    try:  
-        import ctypes
-        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("Mingo.PS5RemotePlay")
-    except Exception:
-        pass
-    app = QtWidgets.QApplication(sys.argv)
-    app.setApplicationName("PS5RemotePlay by Mingo")
-    from ps5rp import theme
-    app.setStyleSheet(theme.STYLE)
-    app.setWindowIcon(theme.app_icon())
-    try:
-        from ps5rp.engine import Engine
-        from ps5rp.main_window import MainWindow
-        settings = cfg.Settings.load()
-        engine = Engine(settings)
-        win = MainWindow(settings, engine)
-        win.show()
-    except Exception:
-        log.exception("startup failed")
-        QtWidgets.QMessageBox.critical(None, "PS5 Remote Play",
-                                       "Startup failed:\n\n" + traceback.format_exc()[-1500:] + f"\nLog: {cfg.LOG_FILE}")
-        return 1
-    return app.exec()
 
 
 def _gl_format(QtGui):
