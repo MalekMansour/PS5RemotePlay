@@ -34,12 +34,7 @@ def _boost_priority() -> None:
         log.info("could not raise priority", exc_info=True)
 
 
-def main() -> int:
-    _boost_priority()
-    from PySide6 import QtCore, QtGui, QtWidgets
-    QtCore.QLoggingCategory.setFilterRules("qt.qpa.*=false")
-    QtGui.QSurfaceFormat.setDefaultFormat(_gl_format(QtGui))
-    try:  
+
         import ctypes
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("Mingo.PS5RemotePlay")
     except Exception:
