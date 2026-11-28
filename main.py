@@ -1,10 +1,4 @@
-"""PS5 Remote Play - entry point. Sets up crash protection, then starts the Qt app."""
-import faulthandler
-import logging
-import os
-import sys
-import threading
-import traceback
+
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "shim")) 
