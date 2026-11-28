@@ -1,4 +1,10 @@
-
+"""PS5 Remote Play - entry point. Sets up crash protection, then starts the Qt app."""
+import faulthandler
+import logging
+import os
+import sys
+import threading
+import traceback
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "shim")) 
@@ -28,7 +34,12 @@ def _boost_priority() -> None:
         log.info("could not raise priority", exc_info=True)
 
 
-
+def main() -> int:
+    _boost_priority()
+    from PySide6 import QtCore, QtGui, QtWidgets
+    QtCore.QLoggingCategory.setFilterRules("qt.qpa.*=false")
+    QtGui.QSurfaceFormat.setDefaultFormat(_gl_format(QtGui))
+    try:  
         import ctypes
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("Mingo.PS5RemotePlay")
     except Exception:
